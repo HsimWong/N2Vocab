@@ -2,6 +2,7 @@ from requests import get
 from bs4 import BeautifulSoup as bs
 # from openpyxl import Workbook as wb
 import openpyxl as opxl
+import json
 # import json
 
 def get_word_info(word):
@@ -28,8 +29,8 @@ def get_word_list():
 		kana = record[1].value
 		# print(kana)
 		kanji = record[2].value
-		print(kana, end = ',')
-		print(kanji)
+		# print(kana, end = ',')
+		# print(kanji)
 		if kanji == None:
 			word_keys.append(kana)
 		else:
@@ -39,6 +40,17 @@ def get_word_list():
 if __name__ == '__main__':
 	word_keys = get_word_list()
 	word_dic = {}
+	i = 0
 	for word_key in word_keys:
-		word_info = get_word_info(word_key)
-		word_dic.update({word_key:word_info})
+		if i % 20 == 0:
+			print(i, end = ",")
+		i += 1	
+		try:
+			word_info = get_word_info(word_key)
+			word_dic.update({word_key:word_info})
+		except:
+			print("%s not found"%word_key)
+
+	# a = {'a':[1,2], 'b':[3,4]}
+	with open("dic_info.json", 'w') as f:
+		json.dump(word_dic, f)
