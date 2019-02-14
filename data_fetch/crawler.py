@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from requests import get
 from bs4 import BeautifulSoup as bs
 # from openpyxl import Workbook as wb
@@ -53,4 +54,5 @@ if __name__ == '__main__':
 
 	# a = {'a':[1,2], 'b':[3,4]}
 	with open("dic_info.json", 'w') as f:
-		json.dump(word_dic, f)
+            str_info = json.dumps(word_dic, ensur_ascii = False)
+            f.write(str_info)
